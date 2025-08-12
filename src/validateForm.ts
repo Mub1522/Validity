@@ -5,12 +5,19 @@ export function validateForm(
   data: Record<string, any>,
   rules: Record<string, string>
 ): FormValidationResult {
-  const errors: Record<string, string[]> = {};
   let isFormValid = true;
+  const errors: Record<string, string[]> = {};
 
   for (const field in rules) {
     const value = data[field];
-    const result = validate(value, rules[field]);
+
+    const ruleList = rules[field].split("|");
+
+    /* Validations */
+    if (!ruleList.length) continue;
+
+    data.__field__ = field;
+    const result = validate(value, rules[field], data);
 
     if (!result.valid) {
       errors[field] = result.errors;
@@ -20,6 +27,6 @@ export function validateForm(
 
   return {
     valid: isFormValid,
-    errors,
+    errors
   };
 }
