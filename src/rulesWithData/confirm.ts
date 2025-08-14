@@ -11,9 +11,9 @@ const confirm: RuleFnWithData = (value, arg, data) => {
 
     if (data[__field__] === data[confirmField]) {
       isValidFnWithData = true;
+    } else {
+      args = { arg1: __field__, arg2: `confirm ${__field__}` };
     }
-
-    args = { arg1: __field__, arg2: `confirm${capitalize(__field__)}` };
   }
 
   return { isValidFnWithData, args };

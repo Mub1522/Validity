@@ -11,6 +11,9 @@ export function validateForm(
   for (const field in rules) {
     const value = data[field];
 
+    /* Skip internal fields */
+    if (/^__/.test(field)) continue;
+
     const ruleList = rules[field].split("|");
 
     /* Validations */
