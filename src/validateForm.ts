@@ -1,5 +1,6 @@
 import { validate } from "./validate";
 import { FormValidationResult } from "./types";
+import { rulesWithData } from "./rulesWithData";
 
 export function validateForm(
   data: Record<string, any>,
@@ -11,16 +12,18 @@ export function validateForm(
   for (const field in rules) {
     const value = data[field];
 
-    /* Skip internal fields */
-    if (/^__/.test(field)) continue;
-
-    const ruleList = rules[field].split("|");
-
     /* Validations */
+    if (/^__/.test(field)) continue;
+    const ruleList = rules[field].split("|");
     if (!ruleList.length) continue;
 
-    data.__field__ = field;
-    const result = validate(value, rules[field], data);
+    let result;
+    if (ruleList.some(rule => rule in rulesWithData)) {
+      data.__field__ = field;
+      result = validate(value, rules[field], data);
+    } else {
+      result = validate(value, rules[field]);
+    }
 
     if (!result.valid) {
       errors[field] = result.errors;
