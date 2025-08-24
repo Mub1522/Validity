@@ -3,3 +3,5 @@ DOCS.md
 FEATURES
 packs
 dist
+_src
+test.js

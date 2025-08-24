@@ -1,11 +1,25 @@
-export type RuleFn = (value: any, arg?: string, data?: Record<string, any>) => boolean;
-export type RuleFnWithData = (value: any, arg?: string, data?: Record<string, any>) => { isValidFnWithData: boolean, args?: Record<string, string> };
-export interface ValidationResult {
-  valid: boolean;
-  errors: string[];
+/* MODES TYPES */
+export interface ValidityBase {
+    /* Global configs */
+    locale?: string
 }
-export interface FormValidationResult {
-  valid: boolean;
-  errors: Record<string, string[]>;
-  logs?: any;
+export type Rules = Record<string, string>
+
+/* MODE FORM */
+export interface ValidityFormOptions extends ValidityBase {
+    form: Record<string, unknown>
+    field?: never
 }
+
+/* MODE FIELD */
+export interface FieldPayload {
+    value: string | number | boolean
+    rules: string
+}
+
+export interface ValidityFieldOptions extends ValidityBase {
+    field: FieldPayload
+    form?: never
+}
+
+export type ValidityOptions = ValidityFormOptions | ValidityFieldOptions

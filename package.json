@@ -30,7 +30,7 @@
     "tslib": "^2.8.1"
   },
   "name": "@mub22/validity",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Lightweight JavaScript validation library inspired by Laravel's rule syntax. Validate fields and forms easily with built-in rules and error messages.",
   "author": "mub22",
   "license": "MIT",
